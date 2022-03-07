@@ -14,7 +14,28 @@ namespace DemoApi.Db
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Fluent API method
             base.OnModelCreating(modelBuilder);
+
+            var user = modelBuilder.Entity<User>();
+            user.HasKey(x => x.Id); //PK
+            user.Property(p=>p.FirstName).IsRequired();
+           
+
+
+
+
+            var address = modelBuilder.Entity<UserAddress>();
+            address.HasKey(x => x.Id);//pk
+
+            address.HasOne(x => x.User)  //fk
+                    .WithOne(x => x.Address)
+                    .HasForeignKey<UserAddress>(fk=>fk.UserId);
+           
+
+            
+
+
 
 
 
