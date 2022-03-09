@@ -26,15 +26,19 @@ namespace DemoApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUser()
         {
-            return await _context.User.ToListAsync();
+            return await _context.User.Include(x=>x.Address).ToListAsync();
         }
        
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<User>> AddUserWithAddress(User user)
         {
             user.Id=Guid.NewGuid();
+
+            user.Address.Id=Guid.NewGuid();//pk
+
+            user.Address.UserId = user.Id;
 
             _context.User.Add(user);
             await _context.SaveChangesAsync();

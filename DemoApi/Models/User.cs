@@ -9,6 +9,6 @@
 
 
 
-        public virtual UserAddress Address { get; set; }
+        public virtual UserAddress? Address { get; set; }
     }
 }
